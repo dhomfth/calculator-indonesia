@@ -85,28 +85,34 @@ const BasicCalculator = () => {
 
   return (
     <div className="max-w-sm mx-auto">
-      <Card className="mb-4">
-        <CardContent className="p-4">
-          <Input
-            value={display}
-            readOnly
-            className="text-right text-2xl font-mono h-16 mb-4 bg-gray-50"
-          />
+      <Card className="mb-6 border-red-200 shadow-xl bg-gradient-to-br from-white to-red-50">
+        <CardContent className="p-6">
+          <div className="bg-gradient-to-r from-red-100 to-pink-100 rounded-lg p-4 mb-6 border border-red-200">
+            <Input
+              value={display}
+              readOnly
+              className="text-right text-3xl md:text-4xl font-mono h-16 border-0 bg-transparent text-red-800 focus:ring-0 shadow-none"
+            />
+          </div>
         </CardContent>
       </Card>
 
-      <div className="grid gap-2">
+      <div className="grid gap-3">
         {buttons.map((row, rowIndex) => (
-          <div key={rowIndex} className="grid grid-cols-4 gap-2">
+          <div key={rowIndex} className="grid grid-cols-4 gap-3">
             {row.map((btn) => (
               <Button
                 key={btn}
-                variant={["÷", "×", "-", "+", "="].includes(btn) ? "default" : "outline"}
-                className={`h-16 text-lg font-semibold ${
+                variant="outline"
+                className={`h-16 text-lg font-bold transition-all duration-200 ${
                   btn === "0" ? "col-span-2" : ""
                 } ${
-                  btn === "C" ? "bg-red-500 hover:bg-red-600 text-white" : ""
-                }`}
+                  btn === "C" 
+                    ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white border-red-500" 
+                    : ["÷", "×", "-", "+", "="].includes(btn)
+                    ? "bg-gradient-to-r from-red-400 to-pink-400 hover:from-red-500 hover:to-pink-500 text-white border-red-400"
+                    : "bg-gradient-to-r from-red-50 to-pink-50 hover:from-red-100 hover:to-pink-100 text-red-700 border-red-300 hover:border-red-400"
+                } shadow-lg hover:shadow-xl hover:scale-105`}
                 onClick={() => {
                   if (btn === "C") {
                     clear();
