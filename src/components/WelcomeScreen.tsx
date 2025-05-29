@@ -212,7 +212,9 @@ const WelcomeScreen = ({ onEnterCalculator }: WelcomeScreenProps) => {
           <div className="mb-16">
             <Card className="bg-gradient-to-r from-red-600 via-pink-600 to-rose-600 text-white shadow-2xl border-0 relative overflow-hidden">
               {/* Background decoration */}
-              <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+              <div className="absolute inset-0 opacity-30" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+              }}></div>
               
               <CardContent className="py-12 px-8 text-center relative z-10">
                 <div className="flex items-center justify-center gap-4 mb-6">
