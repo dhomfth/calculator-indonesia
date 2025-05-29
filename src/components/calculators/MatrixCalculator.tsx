@@ -6,10 +6,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const MatrixCalculator = () => {
+  const [matrixSize, setMatrixSize] = useState<"2x2" | "3x3">("2x2");
   const [matrixA, setMatrixA] = useState([[1, 2], [3, 4]]);
   const [matrixB, setMatrixB] = useState([[5, 6], [7, 8]]);
   const [result, setResult] = useState<number[][] | null>(null);
   const [operation, setOperation] = useState("add");
+
+  const initializeMatrices = (size: "2x2" | "3x3") => {
+    if (size === "2x2") {
+      setMatrixA([[1, 2], [3, 4]]);
+      setMatrixB([[5, 6], [7, 8]]);
+    } else {
+      setMatrixA([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
+      setMatrixB([[9, 8, 7], [6, 5, 4], [3, 2, 1]]);
+    }
+    setResult(null);
+  };
+
+  const handleMatrixSizeChange = (size: "2x2" | "3x3") => {
+    setMatrixSize(size);
+    initializeMatrices(size);
+  };
 
   const updateMatrixA = (row: number, col: number, value: string) => {
     const newMatrix = [...matrixA];
@@ -46,8 +63,14 @@ const MatrixCalculator = () => {
   const calculateDeterminant = (matrix: number[][]) => {
     if (matrix.length === 2) {
       return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    } else if (matrix.length === 3) {
+      return (
+        matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) -
+        matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
+        matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0])
+      );
     }
-    return 0; // Simplified for 2x2 matrices
+    return 0;
   };
 
   const calculate = () => {
@@ -90,10 +113,41 @@ const MatrixCalculator = () => {
 
   return (
     <div className="space-y-6">
+      {/* Matrix Size Selector */}
+      <Card className="border-red-200 shadow-lg bg-gradient-to-br from-white to-red-50">
+        <CardHeader>
+          <CardTitle className="text-red-700">Ukuran Matriks</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-4">
+            <Button
+              variant={matrixSize === "2x2" ? "default" : "outline"}
+              onClick={() => handleMatrixSizeChange("2x2")}
+              className={matrixSize === "2x2" 
+                ? "bg-gradient-to-r from-red-500 to-pink-500 text-white border-0" 
+                : "border-red-300 text-red-600 hover:bg-red-50"
+              }
+            >
+              Matriks 2×2
+            </Button>
+            <Button
+              variant={matrixSize === "3x3" ? "default" : "outline"}
+              onClick={() => handleMatrixSizeChange("3x3")}
+              className={matrixSize === "3x3" 
+                ? "bg-gradient-to-r from-red-500 to-pink-500 text-white border-0" 
+                : "border-red-300 text-red-600 hover:bg-red-50"
+              }
+            >
+              Matriks 3×3
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="border-red-200 shadow-lg bg-gradient-to-br from-white to-red-50">
           <CardHeader className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-t-lg">
-            <CardTitle className="text-lg">Matriks A</CardTitle>
+            <CardTitle className="text-lg">Matriks A ({matrixSize})</CardTitle>
           </CardHeader>
           <CardContent className="p-6">
             {renderMatrix(matrixA, true, updateMatrixA)}
@@ -102,7 +156,7 @@ const MatrixCalculator = () => {
 
         <Card className="border-red-200 shadow-lg bg-gradient-to-br from-white to-red-50">
           <CardHeader className="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-t-lg">
-            <CardTitle className="text-lg">Matriks B</CardTitle>
+            <CardTitle className="text-lg">Matriks B ({matrixSize})</CardTitle>
           </CardHeader>
           <CardContent className="p-6">
             {renderMatrix(matrixB, true, updateMatrixB)}

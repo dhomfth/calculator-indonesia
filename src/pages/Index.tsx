@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calculator, Book, Home, Mail, User, Menu, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,10 +12,15 @@ import MatrixCalculator from "@/components/calculators/MatrixCalculator";
 import GeometryCalculator from "@/components/calculators/GeometryCalculator";
 import UnitConverter from "@/components/calculators/UnitConverter";
 import ContactPage from "@/components/ContactPage";
+import WelcomeScreen from "@/components/WelcomeScreen";
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState("calculator");
+  const [currentView, setCurrentView] = useState("welcome");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  if (currentView === "welcome") {
+    return <WelcomeScreen onEnterCalculator={() => setCurrentView("calculator")} />;
+  }
 
   if (currentView === "contact") {
     return <ContactPage onBack={() => setCurrentView("calculator")} />;
@@ -59,7 +63,7 @@ const Index = () => {
                 <Calculator className="h-6 w-6 md:h-8 md:w-8 text-white" />
               </div>
               <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent">
-                Kalkulator Aljabar Indonesia
+                Kalkulator Indonesia
               </h1>
             </div>
             
@@ -86,6 +90,14 @@ const Index = () => {
               >
                 <Mail className="h-4 w-4 mr-2" />
                 Kontak
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => setCurrentView("welcome")}
+                className="border-red-300 text-red-600 hover:bg-red-50"
+              >
+                <Home className="h-4 w-4 mr-2" />
+                Beranda
               </Button>
             </div>
 
@@ -126,6 +138,17 @@ const Index = () => {
                     >
                       <Mail className="h-4 w-4 mr-2" />
                       Kontak
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      onClick={() => {
+                        setCurrentView("welcome");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="border-red-300 text-red-600 hover:bg-red-50 justify-start"
+                    >
+                      <Home className="h-4 w-4 mr-2" />
+                      Beranda
                     </Button>
                   </div>
                 </SheetContent>
@@ -255,13 +278,13 @@ const Index = () => {
               <Calculator className="h-8 w-8" />
             </div>
             <div>
-              <h3 className="text-xl font-bold">Kalkulator Aljabar Indonesia</h3>
+              <h3 className="text-xl font-bold">Kalkulator Indonesia</h3>
               <p className="text-red-100">Perhitungan Matematika yang Mudah dan Akurat</p>
             </div>
           </div>
           <div className="border-t border-red-300 pt-4">
             <p className="text-red-100 mb-2">
-              © 2024 Kalkulator Aljabar Indonesia. Dibuat dengan ❤️ di Indonesia.
+              © 2024 Kalkulator Indonesia. Dibuat dengan ❤️ di Indonesia.
             </p>
             <p className="text-sm text-red-200">
               Hubungi pengembang: <span className="font-semibold">ridhohusna02@gmail.com</span>
